@@ -6,7 +6,7 @@ Using With Sonoff 4CH
     :image: sonoff_4ch.jpg
 
 ESPHome can also be used with Sonoff 4CH wireless switches. These devices are
-basically just an ESP8266 chip with 4 relays to control power output, a few buttons on the
+basically just an ESP8285 (similar to ESP8266) chip with 4 relays to control power output, a few buttons on the
 top and a few status LEDs.
 
 .. figure:: images/sonoff_4ch_header.jpg
@@ -191,7 +191,7 @@ Step 5: Adding the Button, Relay and LEDs
 Now we would like the 4CH to actually do something, not just connect to WiFi and pretty much sit idle.
 
 Below you will find a table of all usable GPIO pins of the Sonoff 4CH and a configuration file that exposes all
-of the basic functions.
+of the basic functions. The Sonoff 4CH PRO has the same Button, Relay and LED mappings.
 
 ======================================== =========================================
 ``GPIO0``                                Button #1 (inverted)
@@ -311,7 +311,7 @@ them in one area, and simply pass that ID later on. For example, above you can s
 output being created with the ID ``blue_led`` for the blue LED. Later on it is then transformed
 into a :doc:`monochromatic light </components/light/monochromatic>`.
 If you additionally want the buttons to control the relays, look at `the complete Sonoff 4CH
-with automation example <https://github.com/esphome/esphome-docs/blob/current/devices/sonoff_4ch.yaml>`__.
+with automation example <https://github.com/esphome/esphome-docs/blob/current/devices/sonoff_4ch.yaml>` (`Sonoff 4CH PRO also available <https://github.com/esphome/esphome-docs/blob/current/devices/sonoff_4ch_pro.yaml>`)__.
 
 .. figure:: images/sonoff_4ch_result.png
     :align: center
