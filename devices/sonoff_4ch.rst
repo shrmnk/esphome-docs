@@ -191,7 +191,7 @@ Step 5: Adding the Button, Relay and LEDs
 Now we would like the 4CH to actually do something, not just connect to WiFi and pretty much sit idle.
 
 Below you will find a table of all usable GPIO pins of the Sonoff 4CH and a configuration file that exposes all
-of the basic functions. The Sonoff 4CH PRO has the same Button, Relay and LED mappings.
+of the basic functions.
 
 ======================================== =========================================
 ``GPIO0``                                Button #1 (inverted)
@@ -311,7 +311,7 @@ them in one area, and simply pass that ID later on. For example, above you can s
 output being created with the ID ``blue_led`` for the blue LED. Later on it is then transformed
 into a :doc:`monochromatic light </components/light/monochromatic>`.
 If you additionally want the buttons to control the relays, look at `the complete Sonoff 4CH
-with automation example <https://github.com/esphome/esphome-docs/blob/current/devices/sonoff_4ch.yaml>`_ (`Sonoff 4CH PRO also available <https://github.com/esphome/esphome-docs/blob/current/devices/sonoff_4ch_pro.yaml>`_).
+with automation example <https://github.com/esphome/esphome-docs/blob/current/devices/sonoff_4ch.yaml>`_.
 
 .. figure:: images/sonoff_4ch_result.png
     :align: center
@@ -327,6 +327,42 @@ Now triple- or even quadruple-check the UART bridge is not connected to the 4CH,
 connect it.
 
 Happy hacking!
+
+Sonoff 4CH Pro
+--------------
+
+If you have a 4CH Pro, the steps are similar, with the same Button, Relay and LED mappings and ESP8285 processor, except that the button to move the board into boot mode is not connected. 
+Instead, you will need to ground GPIO0 for a few seconds while connecting the UART bridge - and the location of the pin/pad for GPIO0 differs for each board revision. The [Tasmota documentation](https://tasmota.github.io/docs/devices/Sonoff-4CH-Pro) has nice pictures that display where you can connect them.
+
+Once you have ESPHome flashed on the 4CH Pro, the configuration will look similar to the non-Pro, since the wiring is pretty much the same. A `full YAML example is available for the Sonoff 4CH PRO <https://github.com/esphome/esphome-docs/blob/current/devices/sonoff_4ch_pro.yaml>`_.
+
+**DIP Switch Settings**
+
+The 4CH Pro (all revisions) has 3 physical switches labelled S6, K5 and K6, which control the behaviour of the STM32 co-processor in managing the relay states.
+
+By default, the switches are set as:
+
+====== =====
+``S6`` 0
+------ -----
+``K5`` all 0
+------ -----
+``K6`` all 0
+====== =====
+
+This makes the entire set of 4 relays function as a single interlocking group, meaning, when 1 relay is turned on, no other relay can be turned on. 
+
+If your intention was for this behaviour to be mimicked in the ESPHome configuration using interlocking groups, then you can leave the switches as-is (and is in fact more reliable than software-based interlocking), but if you intend to control these relay separately, then you should instead use this configuration:
+
+====== =====
+``S6`` 1
+------ -----
+``K5`` all 1
+------ -----
+``K6`` all 0
+====== =====
+
+This allows each relay's state to be controlled independently of other relay states.
 
 See Also
 --------
